@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 // Prueba la capa de persistencia con una base de datos real en memoria.
 @DataJpaTest
 @ActiveProfiles("test")
-class ProductRepositoryIntegrationTest {
+class ProductRepositoryIT {
 
     @Autowired
     private ProductRepository productRepository;

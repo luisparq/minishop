@@ -20,7 +20,7 @@ import static org.mockito.Mockito.*;
 // Carga Spring y reemplaza el repositorio por un mock.
 @SpringBootTest
 @ActiveProfiles("test")
-class ProductServiceIntegrationTest {
+class ProductServiceIT {
 
     @Autowired
     private ProductService productService;
