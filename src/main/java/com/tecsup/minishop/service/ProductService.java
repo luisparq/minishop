@@ -18,9 +18,15 @@ public class ProductService {
     }
 
     public Product save(Product product) {
-        // Valida el precio y el stock antes de guardar.
-        if (product.getPrice() <= 0) {
+        // Valida el precio y el stock antes de guardar mediante el nuevo método
+        validarProducto(product);
 
+        return productRepository.save(product);
+    }
+
+    // Método privado extraído para realizar las validaciones
+    private void validarProducto(Product product) {
+        if (product.getPrice() <= 0) {
             throw new IllegalArgumentException(
                     "El precio debe ser mayor a cero"
             );
@@ -31,8 +37,6 @@ public class ProductService {
                     "El stock no puede ser negativo"
             );
         }
-
-        return productRepository.save(product);
     }
 
     // Consulta todos los productos registrados.
