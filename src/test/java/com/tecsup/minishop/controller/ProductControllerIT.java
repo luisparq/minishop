@@ -108,4 +108,27 @@ class ProductControllerIT {
         mockMvc.perform(get("/api/products/9999"))
                 .andExpect(status().isInternalServerError());
     }
+
+    @Test
+        @DisplayName("POST debe generar el ID aunque el cliente envíe uno")
+        void shouldIgnoreClientProvidedId() throws Exception {
+        String requestJson = """
+                {
+                        "id": 999999,
+                        "name": "Producto DTO",
+                        "price": 50.0,
+                        "stock": 5
+                }
+                """;
+
+        mockMvc.perform(post("/api/products")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestJson))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").isNumber())
+                .andExpect(jsonPath("$.id").value(not(999999)))
+                .andExpect(jsonPath("$.name").value("Producto DTO"))
+                .andExpect(jsonPath("$.price").value(50.0))
+                .andExpect(jsonPath("$.stock").value(5));
+        }
 }
