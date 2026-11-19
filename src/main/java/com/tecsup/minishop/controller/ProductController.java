@@ -1,5 +1,6 @@
 package com.tecsup.minishop.controller;
 
+import com.tecsup.minishop.dto.ProductRequest;
 import com.tecsup.minishop.model.Product;
 import com.tecsup.minishop.service.ProductService;
 import org.springframework.http.HttpStatus;
@@ -19,9 +20,15 @@ public class ProductController {
         this.productService = productService;
     }
 
-    // Registra un producto y responde con el código HTTP 201.
+    // Registra un producto usando los campos permitidos del DTO.
     @PostMapping
-    public ResponseEntity<Product> create(@RequestBody Product product) {
+    public ResponseEntity<Product> create(@RequestBody ProductRequest request) {
+        Product product = Product.builder()
+                .name(request.name())
+                .price(request.price())
+                .stock(request.stock())
+                .build();
+
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(productService.save(product));
     }
